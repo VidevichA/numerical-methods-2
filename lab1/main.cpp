@@ -1,10 +1,9 @@
 #include <cmath>
-#include <functional>
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <filesystem>
-#include <windows.h>
+#include <future>
 
 const double a = -2;
 const double b = 2;
@@ -242,33 +241,49 @@ void Run()
   }
 }
 
+void ExecuteCommand(const std::string &command)
+{
+  std::system(command.c_str());
+}
+
 // Sorry for hardcode. You can use CreateProcess + create command smarter.
 void MakePlots()
 {
-  std::system("output\\plot.exe real/f1.txt task1/poly1_2_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task1/poly1_4_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task1/poly1_8_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task1/poly1_16_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task1/poly2_2_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task1/poly2_4_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task1/poly2_8_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task1/poly2_16_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task2/poly1_2_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task2/poly1_4_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task2/poly1_8_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task2/poly1_16_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task2/poly2_2_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task2/poly2_4_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task2/poly2_8_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task2/poly2_16_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task3/spline1_0_3_deg.txt task3/spline1_1_3_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task3/spline1_0_5_deg.txt task3/spline1_1_5_deg.txt task3/spline1_2_5_deg.txt task3/spline1_3_5_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task3/spline1_0_9_deg.txt task3/spline1_1_9_deg.txt task3/spline1_2_9_deg.txt task3/spline1_3_9_deg.txt task3/spline1_4_9_deg.txt task3/spline1_5_9_deg.txt task3/spline1_6_9_deg.txt task3/spline1_7_9_deg.txt");
-  std::system("output\\plot.exe real/f1.txt task3/spline1_0_17_deg.txt task3/spline1_1_17_deg.txt task3/spline1_2_17_deg.txt task3/spline1_3_17_deg.txt task3/spline1_4_17_deg.txt task3/spline1_5_17_deg.txt task3/spline1_6_17_deg.txt task3/spline1_7_17_deg.txt task3/spline1_8_17_deg.txt task3/spline1_9_17_deg.txt task3/spline1_10_17_deg.txt task3/spline1_11_17_deg.txt task3/spline1_12_17_deg.txt task3/spline1_13_17_deg.txt task3/spline1_14_17_deg.txt task3/spline1_15_17_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task3/spline2_0_3_deg.txt task3/spline2_1_3_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task3/spline2_0_5_deg.txt task3/spline2_1_5_deg.txt task3/spline2_2_5_deg.txt task3/spline2_3_5_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task3/spline2_0_9_deg.txt task3/spline2_1_9_deg.txt task3/spline2_2_9_deg.txt task3/spline2_3_9_deg.txt task3/spline2_4_9_deg.txt task3/spline2_5_9_deg.txt task3/spline2_6_9_deg.txt task3/spline2_7_9_deg.txt");
-  std::system("output\\plot.exe real/f2.txt task3/spline2_0_17_deg.txt task3/spline2_1_17_deg.txt task3/spline2_2_17_deg.txt task3/spline2_3_17_deg.txt task3/spline2_4_17_deg.txt task3/spline2_5_17_deg.txt task3/spline2_6_17_deg.txt task3/spline2_7_17_deg.txt task3/spline2_8_17_deg.txt task3/spline2_9_17_deg.txt task3/spline2_10_17_deg.txt task3/spline2_11_17_deg.txt task3/spline2_12_17_deg.txt task3/spline2_13_17_deg.txt task3/spline2_14_17_deg.txt task3/spline2_15_17_deg.txt");
+  std::vector<std::string> commands = {
+      "..\\output\\plot.exe real/f1.txt task1/poly1_2_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task1/poly1_4_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task1/poly1_8_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task1/poly1_16_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task1/poly2_2_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task1/poly2_4_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task1/poly2_8_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task1/poly2_16_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task2/poly1_2_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task2/poly1_4_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task2/poly1_8_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task2/poly1_16_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task2/poly2_2_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task2/poly2_4_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task2/poly2_8_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task2/poly2_16_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task3/spline1_0_3_deg.txt task3/spline1_1_3_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task3/spline1_0_5_deg.txt task3/spline1_1_5_deg.txt task3/spline1_2_5_deg.txt task3/spline1_3_5_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task3/spline1_0_9_deg.txt task3/spline1_1_9_deg.txt task3/spline1_2_9_deg.txt task3/spline1_3_9_deg.txt task3/spline1_4_9_deg.txt task3/spline1_5_9_deg.txt task3/spline1_6_9_deg.txt task3/spline1_7_9_deg.txt",
+      "..\\output\\plot.exe real/f1.txt task3/spline1_0_17_deg.txt task3/spline1_1_17_deg.txt task3/spline1_2_17_deg.txt task3/spline1_3_17_deg.txt task3/spline1_4_17_deg.txt task3/spline1_5_17_deg.txt task3/spline1_6_17_deg.txt task3/spline1_7_17_deg.txt task3/spline1_8_17_deg.txt task3/spline1_9_17_deg.txt task3/spline1_10_17_deg.txt task3/spline1_11_17_deg.txt task3/spline1_12_17_deg.txt task3/spline1_13_17_deg.txt task3/spline1_14_17_deg.txt task3/spline1_15_17_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task3/spline2_0_3_deg.txt task3/spline2_1_3_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task3/spline2_0_5_deg.txt task3/spline2_1_5_deg.txt task3/spline2_2_5_deg.txt task3/spline2_3_5_deg.txt",
+      "..\\output\\plot.exe real/f2.txt task3/spline2_0_9_deg.txt task3/spline2_1_9_deg.txt task3/spline2_2_9_deg.txt task3/spline2_3_9_deg.txt task3/spline2_4_9_deg.txt task3/spline2_5_9_deg.txt task3/spline2_6_9_deg.txt task3/spline2_7_9_deg.txt", "..\\output\\plot.exe real/f2.txt task3/spline2_0_17_deg.txt task3/spline2_1_17_deg.txt task3/spline2_2_17_deg.txt task3/spline2_3_17_deg.txt task3/spline2_4_17_deg.txt task3/spline2_5_17_deg.txt task3/spline2_6_17_deg.txt task3/spline2_7_17_deg.txt task3/spline2_8_17_deg.txt task3/spline2_9_17_deg.txt task3/spline2_10_17_deg.txt task3/spline2_11_17_deg.txt task3/spline2_12_17_deg.txt task3/spline2_13_17_deg.txt task3/spline2_14_17_deg.txt task3/spline2_15_17_deg.txt"};
+
+  std::vector<std::thread> threads;
+  for (const auto &command : commands)
+  {
+    threads.emplace_back(ExecuteCommand, command);
+  }
+
+  for (auto &thread : threads)
+  {
+    thread.join();
+  }
 }
 
 int main()
