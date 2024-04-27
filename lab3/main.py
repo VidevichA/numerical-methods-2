@@ -12,7 +12,7 @@ y_imt_right = y_values[-1]
 
 x_values, y_values = runge_kutta_third_order(f, h, u0, x_values)
 display_data(x_values, y_values,
-             'Решение системы дифференциальных уравнений методом Рунге-Кутты 3-го порядка')
+             'Решение системы дифференциальных уравнений методом Рунге-Кутта 3-го порядка')
 
 y_rk_right = y_values[-1]
 
