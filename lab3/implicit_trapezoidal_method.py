@@ -11,7 +11,6 @@ def implicit_trapezoidal_method(f, h, y0, x_values):
 
         def equation(y_next):
             return yi_prev + h / 2 * (f(xi, yi_prev) + f(xi + h, y_next)) - y_next
-        yi_next_guess = yi_prev + h * f(xi, yi_prev)
-        yi_next = fsolve(equation, yi_next_guess)
+        yi_next = fsolve(equation, yi_prev)
         y_values[i] = yi_next
     return x_values, y_values
