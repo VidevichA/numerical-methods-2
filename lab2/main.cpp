@@ -39,10 +39,8 @@ void RunTask1()
     const double I1 = CalculateUsingTrapezoidalFormula(a, b, N);
     N *= 2;
     const double I2 = CalculateUsingTrapezoidalFormula(a, b, N);
-
     error = CalculateErrorUsingRungeRule(I1, I2, p);
-
-  } while (error < eps);
+  } while (error > eps);
 
   const double stepSize = (b - a) / N;
 
@@ -62,14 +60,14 @@ double F2Numerator(double x)
 }
 
 // НАСТ
-double CalculateUsingHADA(double a, double b, int n)
+double CalculateUsingHADA(double a, double b, int N)
 {
   double sum = 0.0;
-  for (int i = 0; i <= n; i++)
+  for (int i = 0; i <= N; i++)
   {
-    sum += F2Numerator(cos(M_PI * (2 * i + 1) / 2 / (n + 1)));
+    sum += F2Numerator(cos(M_PI * (2 * i + 1) / 2 / (N + 1)));
   }
-  return sum * M_PI / (n + 1);
+  return sum * M_PI / (N + 1);
 }
 
 double CalculateUsingReactangleFormula(double a, double b, int N)
@@ -88,7 +86,7 @@ void RunTask2()
   const double a = -1.0;
   const double b = 1.0;
   std::cout << "Количество узлов\tНАСТ\tформула средних прямоугольников\n";
-  for (int n = 1; n <= 20; n++)
+  for (int n = 1; n <= 200; n++)
   {
     double nystrom_result = CalculateUsingHADA(a, b, n);
     double rectangle_result = CalculateUsingReactangleFormula(a, b, n);
